@@ -1,5 +1,18 @@
 interface IConnection<T> {
-    nodes: T[]
+    nodes: T[],
+    totalCount: number,
+    pageInfo: IPageInfo
 }
 
-export type { IConnection }
+interface IPageInfo {
+    hasNextPage: boolean,
+    hasPreviousPage: boolean,
+    endCursor: string,
+    startCursor: string,
+}
+
+interface ISearchQuery<T> {
+    search: IConnection<T>
+}
+
+export type { IConnection, IPageInfo, ISearchQuery }
