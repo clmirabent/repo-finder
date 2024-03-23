@@ -6,8 +6,9 @@ class UserService {
   async getByName(name: string) {
     try {
       const { user } = await graphqlWithAuth<IUserRequestResponse>(`
-        query getUserByName($name: String!) {
-        user (login: $name) {
+      query getUserByName($name: String!) {
+        user(login: $name) {
+          url
           avatarUrl
           name
           login

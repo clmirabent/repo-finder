@@ -3,6 +3,7 @@ import { IRepoInfo } from "./RepoInterface"
 
 interface IUserInfo {
     name: string,
+    url: string,
     avatarUrl: string,
     login: string,
     bioHTML: string

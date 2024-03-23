@@ -1,15 +1,22 @@
-import { useEffect, useState, ChangeEvent } from "react";
-import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
-import InfiniteScroll from 'react-infinite-scroll-component';
+import { Grid } from "@mui/material"
+import toast from "react-hot-toast"
+
 
 import { IUserInfo } from "../types/UserInteface";
 import { IRepoInfo } from "../types/RepoInterface";
+import { IConnection } from "../types/GitHubApi";
 
 import RepoService from "../services/api/repositories";
 
-import { SearchBarComponent } from "../components/searchBar/SearchBarComponent";
-import { IConnection } from "../types/GitHubApi";
+import UserDataComponent from "../components/userData/UserDataComponent";
+import RepoFilterComponent from "../components/repoFilter/RepoFilterComponent";
+import InfinityScrollComponent from "../components/infinityScroll/InfinityScrollComponent";
+import imageLogo from "../assets/imageLogo.png"
+import LogoComponent from "../components/logo/LogoComponent";
+
 
 
 interface IQueryInfo {
@@ -18,18 +25,11 @@ interface IQueryInfo {
 }
 
 function RepositoryList() {
-    const location = useLocation()
-
     const [repoResponse, setRepoResponse] = useState<IRepoInfo[]>([])
     const [user, setUser] = useState<IUserInfo>()
     const [connectionInfo, setConnectionInfo] = useState<IConnection<IRepoInfo>>()
-    const [query, setQuery] = useState<IQueryInfo>({ query: "", language: "" })
-    const [availableLanguage, setAvailableLanguage] = useState<string[]>()
-
-    useEffect(
-        () => {
-            setUser(location.state["user"]);
-        }, [location])
+    const [query, setQuery] = useState<IQueryInfo>({ query: "", language: "all" })
+    const [availableLanguage, setAvailableLanguage] = useState<string[]>([])
 
     useEffect(
         () => { getRepositories(); }
@@ -40,29 +40,17 @@ function RepositoryList() {
             const _query = `user:${user.login}`
             setQuery({
                 query: _query,
-                language: ""
+                language: "all"
             })
-            getRepos(_query, "")
+            getRepos(_query, "all", true)
         }
     }
 
-
-    function onSearchSubmit(repositoryName: string) {
-        const userName = user?.login
-        if (userName) {
-            const _query = `repo:${userName}/${repositoryName}`
-            setQuery(currentQuery => ({
-                ...currentQuery,
-                query: _query
-            }))
-            getRepos(_query, query.language, true)
+    function onQueryChanged(newQuery: IQueryInfo) {
+        if (user) {
+            setQuery(newQuery)
+            getRepos(newQuery.query, newQuery.language, true)
         }
-    }
-
-    function changeLanguage(event: ChangeEvent<HTMLSelectElement>): void {
-        const newLanguage = event.currentTarget.value
-        setQuery(currentQuery => ({ ...currentQuery, language: newLanguage }));
-        getRepos(query.query, newLanguage, true);
     }
 
     function fetchData() {
@@ -70,7 +58,7 @@ function RepositoryList() {
     }
 
     async function getRepos(query: string, language: string, override: boolean = false, cursor?: string) {
-        const condition = `${query} ${language ? `language:${language}` : ""}`
+        const condition = `${query ? query : `user:${user?.login}`} ${language !== "all" ? `language:${language}` : ""}`
         const connection = await RepoService.queryRepo(condition, cursor);
 
         // this get languages from returned repos and filter them if language is null
@@ -80,6 +68,8 @@ function RepositoryList() {
             setAvailableLanguage(language => Array.from(new Set(language?.concat(languages))))
             setRepoResponse(currentRepos => [...currentRepos, ...connection?.nodes ?? []]);
         } else {
+            if (!(connection?.nodes.length))
+                toast.error("Repository not found")
             setAvailableLanguage(Array.from(new Set(languages)));
             setRepoResponse(connection?.nodes ?? [])
         }
@@ -89,49 +79,27 @@ function RepositoryList() {
 
     return (
         <>
-            <div>
-                {user?.avatarUrl && <img src={user.avatarUrl} />}
-                <br />
-                {user?.name}
-                <br />
-                {user?.login}
-                <br />
-                {user?.bioHTML && <div dangerouslySetInnerHTML={{ __html: user.bioHTML }} />}
-            </div>
-            <SearchBarComponent placeholder="Enter repository name..." onSearch={onSearchSubmit} />
-            <select onChange={changeLanguage}>
-                <option value="">All</option>
-                {availableLanguage?.map(lang => <option key={lang} value={lang}>{lang}</option>)}
-            </select>
-            {
-                connectionInfo &&
-                <div>
-                    <div> <span> Tiene </span>{connectionInfo?.totalCount} repositorios </div>
-                    <InfiniteScroll
-                        dataLength={repoResponse.length}
-                        next={fetchData}
-                        hasMore={connectionInfo.pageInfo.hasNextPage}
-                        loader={<p>Loading...</p>}
-                    >
-                        <ul>
-                            {repoResponse?.map((repository) =>
-                                <li key={repository.id}>
-                                    <div>
-                                        {repository.name}
-                                    </div>
-                                    <div dangerouslySetInnerHTML={{ __html: repository.descriptionHTML }}>
-                                    </div>
-                                    <div>
-                                        {repository.languages.nodes.map((lang) => <span style={{ backgroundColor: lang.color }} key={lang.name}>{lang.name}</span>)}
-                                    </div>
-                                </li>)}
-                        </ul>
-
-                    </InfiniteScroll>
-                </div>
-            }
+            <Grid container justifyContent="start">
+                <Grid item>
+                    <Link to="/" style={{ textDecoration: "none" }}>
+                        <LogoComponent />
+                    </Link>
+                </Grid>
+            </Grid>
+            <Grid container justifyContent="center">
+                <Grid container spacing={2} alignItems="top" >
+                    <Grid item>
+                        <UserDataComponent onUserLoaded={setUser} />
+                    </Grid>
+                    <Grid item xs>
+                        <RepoFilterComponent availableLanguages={availableLanguage} user={user} onQueryChanged={onQueryChanged} />
+                        <InfinityScrollComponent connectionInfo={connectionInfo} fetchData={fetchData} repositories={repoResponse} />
+                    </Grid>
+                </Grid>
+            </Grid>
         </>
     )
+
 }
 
-export default RepositoryList
+export default RepositoryList;

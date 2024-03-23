@@ -1,7 +1,13 @@
 import { useNavigate } from "react-router-dom";
 
-import { SearchBarComponent } from "../components/searchBar/SearchBarComponent";
+import { Box } from "@mui/material"
+import toast from "react-hot-toast"
+
+
+import SearchBarComponent, { SearchBarSize } from "../components/searchBar/SearchBarComponent";
 import UserService from "../services/api/user";
+import LogoComponent from "../components/logo/LogoComponent";
+
 
 function MainDashboard() {
   const navigate = useNavigate()
@@ -17,15 +23,19 @@ function MainDashboard() {
         })
       }
       else {
-        alert("Not found")
+        toast.error("Sorry. User not found.")
       }
     }
   }
 
 
-  return <div>
-    <SearchBarComponent placeholder="Enter Github user..." onSearch={onSearchSubmit} />
-  </div>
+  return <Box display="flex" flexDirection="column" alignItems="center" justifyItems="center" width="100%" paddingTop="14%">
+    <LogoComponent />
+    <Box width="50%">
+      <SearchBarComponent placeholder="Find user..." onSearch={onSearchSubmit} size={SearchBarSize.lg} />
+    </Box>
+  </Box >
+
 }
 export default MainDashboard
 

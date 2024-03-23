@@ -2,6 +2,7 @@ import { IConnection } from "./GitHubApi";
 
 interface IRepoInfo {
     name: string,
+    url: string,
     id: string,
     descriptionHTML: string,
     primaryLanguage: IRepoLanguage,
