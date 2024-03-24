@@ -1,30 +1,43 @@
-# React + TypeScript + Vite
+# GitHub Repo Finder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project let users to search a github user and display his/her repositories in a list. Once the user find the usernme searched, he/she can filter the list of their repositories by name or programming language to find the ones is interested in. 
 
-Currently, two official plugins are available:
+Clicking on search results will take the user to GitHub to explore each of the repositories found and the user profile.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+## 🚀 How to run the project?
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
+*_Step 1: Clone the repository*_
 
 ```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+https://github.com/clmirabent/repo-finder
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+*_Step 2: Run 'npm install' in the base folder*_
+
+```js
+npm install
+```
+*_Step 3: Open another terminal to run the server with 'npm run dev_*
+
+```js
+npm run dev
+```
+
+
+## 🔖 How to run the test suite
+
+## Built with:
+
+- React JS 
+- Typescript
+- MaterialUI
+- GraphQL
+- graphql.js: GitHub GraphQL API client for browsers and Node
+- React-Hot-Toast
+
+## 💡 Future improvements
+
+- Improve the error handling by providing more informative error messages
+- Integrate OAuth for user authentication 
+- Add the functionality to sort by last updated and name
