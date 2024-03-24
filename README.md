@@ -1,8 +1,8 @@
 # GitHub Repo Finder
 
-This project let users to search a github user and display his/her repositories in a list. Once the user find the usernme searched, he/she can filter the list of their repositories by name or programming language to find the ones is interested in. 
+This project let users to search a github user and display his/her repositories in a list. Once the user find the username searched, he/she can filter the list of their repositories by name or programming language to find the ones is interested in. 
 
-Clicking on search results will take the user to GitHub to explore each of the repositories found and the user profile.
+Clicking on the repository resulted will take the user to GitHub to explore each of the repositories found and the user profile.
 
 
 ## 🚀 How to run the project?
