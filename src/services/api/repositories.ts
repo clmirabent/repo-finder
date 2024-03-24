@@ -2,9 +2,19 @@ import { ISearchQuery } from "../../types/GitHubApi";
 import { IRepoInfo } from "../../types/RepoInterface";
 import graphqlWithAuth from "./githubApiWrapper";
 
+/*
+ *RepoService: Handles interactions with the GitHub GraphQL API for repository data.
+ */
 class RepoService {
+  /**
+  * Queries for repositories based on a search query and optional pagination cursor.
+  * @param {string} query - The search query string.
+  * @param {string} afterCursor - Optional cursor for pagination (for retrieving subsequent pages).
+  * @returns {Promise<ISearchQuery<IRepoInfo> | undefined>} The GraphQL search query response, or undefined if an error occurs.
+  */
   async queryRepo(query: string, afterCursor?: string) {
     try {
+      // Execute the GraphQL query with authentication and parameters:
       const { search } = await graphqlWithAuth<ISearchQuery<IRepoInfo>>(`
           query getAllRepos($condition: String!, $first: Int, $lastEndCursor: String) {
             search(
@@ -41,19 +51,20 @@ class RepoService {
             }
           }
           ` , {
-        first: 5,
+        first: 5, // Number of repositories to fetch per request
         condition: query,
         lastEndCursor: afterCursor,
       });
-      return search;
+      return search; // Return the parsed GraphQL response data
 
     } catch (e: any) {
-      console.error(e);
-      return undefined;
+      console.error(e); // Log any errors
+      return undefined; // Return undefined in case of errors
     }
   }
 }
 
+// Create a singleton instance of the service for easy access
 const singleton = new RepoService();
 
 export default singleton;

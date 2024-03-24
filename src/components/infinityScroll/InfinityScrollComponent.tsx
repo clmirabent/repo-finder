@@ -11,6 +11,9 @@ interface InfinityScrollPropsComponent {
     fetchData: () => void
 }
 
+/*
+ * Component for infinity scroll through repositories. Using the infinite scroll library
+ */
 
 function InfinityScrollComponent(props: InfinityScrollPropsComponent) {
     return <Box display={"flex"} alignItems={"flex-start"} flexDirection={"column"}>

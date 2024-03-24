@@ -19,24 +19,46 @@ interface RepoFilterComponentProp {
     onQueryChanged: (query: IQueryInfo) => void
 }
 
+/*
+ * Component for filtering repositories.
+ ** @param {RepoFilterComponentProps} props - The props for RepoFilterComponent.
+ */
+
 function RepoFilterComponent(props: RepoFilterComponentProp) {
+
+    // State for managing query and language filters:
     const [queryInfo, setQueryInfo] = useState<IQueryInfo>({
         query: ``,
         language: "all"
     })
 
+    /**
+    * Calls props.onQueryChanged with the updated queryInfo when the queryInfo changes. informing the parent component
+    * of the updated query and language filters.
+    */
+
     useEffect(() => {
         props.onQueryChanged(queryInfo)
     }, [queryInfo])
 
+    /**
+    * Updates the queryInfo state based on the input string.
+    * @param {string} input - The input string for the search query*/
     function onSearchSubmit(input: string) {
         let newQuery = ""
+        /** If input is not empty, it sets the new query to a string that is constructed to search for 
+         * repositories on GitHub based on the user's username.*/
         if (input)
             newQuery = `repo:${props.user?.login}/${input}`
         setQueryInfo(_query => ({ ..._query, query: newQuery }))
     }
 
+    /**
+    * This function updates the language value in the queryInfo object  when the language selection is changed.
+    * @param newLanguage - The new language selection object. */
+
     function onChangeLanguage(newLanguage: SelectChangeEvent<string>) {
+        // Update the queryInfo state with the selected language:
         setQueryInfo(_query => ({ ..._query, language: newLanguage.target.value }))
     }
 

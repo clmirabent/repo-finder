@@ -10,17 +10,24 @@ interface UserDataComponentProp {
     onUserLoaded?: (userInfo: IUserInfo) => void
 }
 
+/**
+ ** Component that displays user data.
+ * @param {UserDataComponentProp} props - The props for this component.
+ */
 
 function UserDataComponent(props: UserDataComponentProp) {
 
+    // Access the current route information:
     const location = useLocation()
 
     const [user, setUser] = useState<IUserInfo>()
 
     useEffect(
         () => {
+            // Get the user info from the route state and notify parent component.
             const userInfo = location.state["user"];
             setUser(userInfo);
+            // Inform parent component if user data is available and onUserLoaded prop is provided:
             if (userInfo && props.onUserLoaded) {
                 props.onUserLoaded(userInfo)
             }

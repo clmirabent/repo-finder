@@ -12,9 +12,18 @@ import LogoComponent from "../components/logo/LogoComponent";
 function MainDashboard() {
   const navigate = useNavigate()
 
+  /**
+ ** Function that handles the submission of a search
+ * @param {string} userName - The username to search for
+ * @returns {Promise<void>}
+ */
+
   async function onSearchSubmit(userName: string) {
+    // Check if a username is provided
     if (userName) {
+      // Get username from UserService
       const user = await UserService.getByName(userName);
+      //If the user is found, navigate to the repositories page with the user data.
       if (user) {
         navigate('/repositories', {
           state: {
@@ -23,6 +32,7 @@ function MainDashboard() {
         })
       }
       else {
+        // Display an error message if the user was not found.
         toast.error("Sorry. User not found.")
       }
     }

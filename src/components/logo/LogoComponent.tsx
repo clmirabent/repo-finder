@@ -1,6 +1,9 @@
 import { Grid, Box, Typography } from "@mui/material"
 import RepoLogo from "../../assets/github.png"
 
+/*
+ * Component for displaying Repo Finder's logo.
+ */
 
 function LogoComponent() {
     return <Grid container paddingBottom={1} justifyContent="center" alignItems="center" gap={2}>

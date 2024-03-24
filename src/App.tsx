@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Container } from "@mui/material";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 
 import RepositoryList from './pages/RepositoryList'
 import MainDashboard from './pages/MainDashboard';

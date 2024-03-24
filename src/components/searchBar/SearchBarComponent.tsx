@@ -13,11 +13,21 @@ interface SearchBarComponentProp {
     size?: SearchBarSize
 }
 
+/*
+ * Component that allows users to input a search query and trigger a search action.
+  @param props - The properties for the SearchBarComponent.
+ */
+
+
 function SearchBarComponent(props: SearchBarComponentProp) {
     const [input, setInput] = useState<string>("");
 
+    // The size of the search bar. Defaults to medium if not specified in the props
     const size = props.size ?? SearchBarSize.md;
 
+    /**
+     * Triggers the search action if the onSearch prop is provided.
+     */
     function onSearch() {
         if (props.onSearch)
             props.onSearch(input)
