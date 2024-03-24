@@ -7,35 +7,35 @@ Clicking on search results will take the user to GitHub to explore each of the r
 
 ## 🚀 How to run the project?
 
-*_Step 1: Clone the repository*_
+*Step 1: Clone the repository*
 
-```js
-https://github.com/clmirabent/repo-finder
+```bash
+git clone https://github.com/clmirabent/repo-finder
 ```
 
-*_Step 2: Run 'npm install' in the base folder*_
+*Step 2: Run 'npm install' in the base folder to install the dependencies*
 
-```js
+```bash
 npm install
 ```
-*_Step 3: Open another terminal to run the server with 'npm run dev_*
+*Step 3: Run in the terminal to start the server*
 
-```js
+```bash
 npm run dev
 ```
 
 
 ## 🔖 How to run the test suite
 
-Enter in  the terminal:
+Run in  the terminal:
 
-```js
+```bash
 npm run test
 ```
 ## 🔖 How to run the Storybook for components
 
-Enter in  the terminal:
-```js
+Run in  the terminal:
+```bash
 npm run storybook
 ```
 
@@ -50,9 +50,19 @@ npm run storybook
 - Storybook
 - Infinite scroll library
 - Vitest
+- Testing library
+
 
 ## 💡 Future improvements
 
 - Improve the error handling by providing more informative error messages
 - Integrate OAuth for user authentication 
 - Add the functionality to sort by last updated and name
+- Add more test for the components:
+    - `RepoFilterComponent`:
+        - Whenever no language only all language option is available
+        - No need to test SearchBar used here since it is already test 
+        - No need to test selector since 3rd Party library
+    - `InfiniteScroll`:
+        - No need to test InfiniteScroll component used there since it is 3rd Party Library
+- Add E2E test
