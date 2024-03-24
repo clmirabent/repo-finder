@@ -19,7 +19,7 @@ function InfinityScrollComponent(props: InfinityScrollPropsComponent) {
     return <Box display={"flex"} alignItems={"flex-start"} flexDirection={"column"}>
         <Box padding={"10px"}>
             <Typography variant="subtitle2" >
-                This user have {props.connectionInfo?.totalCount} repositories
+                This user have {props.connectionInfo?.totalCount ?? 0} repositories
             </Typography>
         </Box>
         {

@@ -27,6 +27,18 @@ npm run dev
 
 ## 🔖 How to run the test suite
 
+Enter in  the terminal:
+
+```js
+npm run test
+```
+## 🔖 How to run the Storybook for components
+
+Enter in  the terminal:
+```js
+npm run storybook
+```
+
 ## Built with:
 
 - React JS 
@@ -35,6 +47,9 @@ npm run dev
 - GraphQL
 - graphql.js: GitHub GraphQL API client for browsers and Node
 - React-Hot-Toast
+- Storybook
+- Infinite scroll library
+- Vitest
 
 ## 💡 Future improvements
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { Grid } from "@mui/material"
 import toast from "react-hot-toast"
@@ -30,6 +30,17 @@ function RepositoryList() {
     const [connectionInfo, setConnectionInfo] = useState<IConnection<IRepoInfo>>()
     const [query, setQuery] = useState<IQueryInfo>({ query: "", language: "all" })
     const [availableLanguage, setAvailableLanguage] = useState<string[]>([])
+
+    // Access the current route information:
+    const location = useLocation()
+
+    useEffect(
+        () => {
+            // Get the user info from the route state and notify parent component.
+            const userInfo = location.state["user"];
+            setUser(userInfo);
+        }, [location]
+    )
 
     // Get all reposities for the current user. This hook runs when the component mounts and whenever the 'user' dependency changes.
     useEffect(
@@ -119,7 +130,7 @@ function RepositoryList() {
             <Grid container justifyContent="center">
                 <Grid container spacing={2} alignItems="top" >
                     <Grid item>
-                        <UserDataComponent onUserLoaded={setUser} />
+                        <UserDataComponent user={user} />
                     </Grid>
                     <Grid item xs>
                         <RepoFilterComponent availableLanguages={availableLanguage} user={user} onQueryChanged={onQueryChanged} />
