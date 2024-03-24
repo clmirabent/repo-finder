@@ -9,7 +9,7 @@ import { IUserInfo } from "../types/UserInteface";
 import { IRepoInfo } from "../types/RepoInterface";
 import { IConnection } from "../types/GitHubApi";
 
-import RepoService from "../services/api/repositories";
+import RepoService from "../services/api/repositoryService";
 
 import UserDataComponent from "../components/userData/UserDataComponent";
 import RepoFilterComponent from "../components/repoFilter/RepoFilterComponent";

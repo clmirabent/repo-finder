@@ -1,11 +1,15 @@
-import { GraphqlResponseError } from "@octokit/graphql";
+import { GraphqlResponseError, graphql } from "@octokit/graphql";
 import { IUserRequestResponse } from "../../types/UserInteface";
 import graphqlWithAuth from "./githubApiWrapper";
 
 /*
- *UserService: Handles interactions with the GitHub GraphQL API for user data.
+ * UserService: Handles interactions with the GitHub GraphQL API for user data.
  */
 class UserService {
+
+  constructor(private apiClient: typeof graphql) {
+  }
+
   /**
    * Fetches user information by username using the GitHub GraphQL API.
    * @param {string} name - The username of the user to retrieve information for.
@@ -14,7 +18,7 @@ class UserService {
   async getByName(name: string) {
     try {
       // Execute the GraphQL query with authentication and username parameter:
-      const { user } = await graphqlWithAuth<IUserRequestResponse>(`
+      const { user } = await this.apiClient<IUserRequestResponse>(`
       query getUserByName($name: String!) {
         user(login: $name) {
           url
@@ -38,6 +42,7 @@ class UserService {
 }
 
 // Create a singleton instance of the service for easy access
-const singleton = new UserService();
+const singleton = new UserService(graphqlWithAuth);
 
 export default singleton;
+export { UserService };

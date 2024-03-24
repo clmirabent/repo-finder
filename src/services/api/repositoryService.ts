@@ -1,11 +1,20 @@
+import { graphql } from "@octokit/graphql";
+
+
 import { ISearchQuery } from "../../types/GitHubApi";
 import { IRepoInfo } from "../../types/RepoInterface";
 import graphqlWithAuth from "./githubApiWrapper";
 
 /*
- *RepoService: Handles interactions with the GitHub GraphQL API for repository data.
+ * RepoService: Handles interactions with the GitHub GraphQL API for repository data.
  */
 class RepoService {
+  /**
+   * @param apiCLient graphlq client
+   */
+  constructor(private apiCLient: typeof graphql) {
+  }
+
   /**
   * Queries for repositories based on a search query and optional pagination cursor.
   * @param {string} query - The search query string.
@@ -15,7 +24,7 @@ class RepoService {
   async queryRepo(query: string, afterCursor?: string) {
     try {
       // Execute the GraphQL query with authentication and parameters:
-      const { search } = await graphqlWithAuth<ISearchQuery<IRepoInfo>>(`
+      const { search } = await this.apiCLient<ISearchQuery<IRepoInfo>>(`
           query getAllRepos($condition: String!, $first: Int, $lastEndCursor: String) {
             search(
               first: $first
@@ -65,6 +74,7 @@ class RepoService {
 }
 
 // Create a singleton instance of the service for easy access
-const singleton = new RepoService();
+const singleton = new RepoService(graphqlWithAuth);
 
 export default singleton;
+export { RepoService };

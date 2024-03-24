@@ -10,7 +10,6 @@ interface IRepoInfo {
     descriptionHTML: string, //The HTML formatted description of the repository.
     primaryLanguage: IRepoLanguage, //The primary programming language of the repository.
     languages: IConnection<IRepoLanguage>, //A paginated connection of the programming languages used in the repository.
-    repositoryTopics: IConnection<{ topic: { name: string } }>, //A paginated connection of the topics associated with the repository.
 }
 
 /*

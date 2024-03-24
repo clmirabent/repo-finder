@@ -5,7 +5,7 @@ import toast from "react-hot-toast"
 
 
 import SearchBarComponent, { SearchBarSize } from "../components/searchBar/SearchBarComponent";
-import UserService from "../services/api/user";
+import UserService from "../services/api/userService";
 import LogoComponent from "../components/logo/LogoComponent";
 
 
