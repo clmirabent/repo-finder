@@ -55,7 +55,7 @@ describe("Test repository service", () => {
             request: {
                 fetch: fetchMock
                     .sandbox()
-                    .post("https://api.github.com/graphql", (url, options) => {
+                    .post("https://api.github.com/graphql", (_1, _2) => {
                         return { data: result };
                     })
             }

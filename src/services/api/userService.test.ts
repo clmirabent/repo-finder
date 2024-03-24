@@ -19,7 +19,7 @@ describe("Test user service", () => {
         request: {
             fetch: fetchMock
                 .sandbox()
-                .post("https://api.github.com/graphql", (url, options) => {
+                .post("https://api.github.com/graphql", (_, options) => {
                     const body = JSON.parse(options.body?.toString() ?? "{}")
                     if (body["variables"]["name"] === "username")
                         return { data: { user: testUser } }
